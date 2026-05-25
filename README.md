@@ -1,19 +1,33 @@
-# 🎈 Blank app template
+# 삼각함수 변환 탐구 앱
 
-A simple Streamlit app template for you to modify!
+이 앱은 중·고등학생 및 교사를 위해 `y = a \sin(b(x - m)) + n` 와 `y = a \cos(b(x - m)) + n` 의 변화를 실시간으로 탐구하도록 설계되었습니다.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+주요 기능
+- `sin` / `cos` 기본 함수 선택
+- `a` 값으로 진폭 및 x축 대칭 확인
+- `b` 값으로 주기 변화 탐구
+- `m` 값으로 x축 방향 평행 이동 확인
+- `n` 값으로 y축 방향 평행 이동 확인
+- 기준 그래프와 변형 그래프를 비교하는 Plotly 시각화
+- 라디안 눈금, 고정 y축 범위, 동적 수식 및 핵심 성질 표시
 
-### How to run it on your own machine
+## 실행 방법
 
-1. Install the requirements
+1. 종속성 설치
 
-   ```
-   $ pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-2. Run the app
+2. 앱 실행
 
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+```bash
+streamlit run streamlit_app.py
+```
+
+## 사용 방법
+
+- 사이드바에서 `sin(x)` 또는 `cos(x)`를 선택합니다.
+- 슬라이더로 `a`, `b`, `m`, `n` 값을 조절합니다.
+- `초기화` 버튼으로 기본값 `(1, 1, 0, 0)`으로 되돌립니다.
+- 그래프 아래에 실시간으로 업데이트되는 함수식과 최대/최소값, 주기를 확인합니다.
