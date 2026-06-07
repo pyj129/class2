@@ -77,8 +77,22 @@ def build_function_formula(function_type: str, a: float, b: float, m: float, n: 
 def build_period_text(b: float) -> tuple[str, str]:
     if b == 0:
         return "\\infty", "\\infty"
-    fraction = f"\\frac{{2\\pi}}{{{abs(int(b))}}}" if abs(b - round(b)) < 1e-8 else f"\\frac{{2\\pi}}{{{format_coefficient(abs(b))}}}"
-    decimal = format_coefficient(2 * math.pi / abs(b))
+    abs_b = abs(b)
+    
+    if abs(b - round(b)) < 1e-8:  # 정수
+        b_int = abs(int(round(b)))
+        if b_int == 1:
+            fraction = "2\\pi"
+        else:
+            fraction = f"\\frac{{2\\pi}}{{{b_int}}}"
+    else:  # 실수
+        b_coeff = format_coefficient(abs_b)
+        if b_coeff == "1":
+            fraction = "2\\pi"
+        else:
+            fraction = f"\\frac{{2\\pi}}{{{b_coeff}}}"
+    
+    decimal = format_coefficient(2 * math.pi / abs_b)
     return fraction, decimal
 
 
@@ -190,9 +204,8 @@ def main() -> None:
         n = st.slider("n (y축 이동)", -5.0, 5.0, st.session_state.n, step=0.1, key="n")
 
         if st.button("초기화"):
-            for key, value in DEFAULTS.items():
-                st.session_state[key] = value
-            st.experimental_rerun()
+            st.session_state.clear()
+            st.rerun()
 
         st.markdown(f"**현재 m 값:** $m = {format_m_text(m)}$")
         if b == 0:
@@ -213,9 +226,9 @@ def main() -> None:
     st.write(f"- 최대값: $|a| + n = {format_coefficient(abs(a))} + {format_coefficient(n)} = {format_coefficient(max_value)}$")
     st.write(f"- 최소값: $-|a| + n = -{format_coefficient(abs(a))} + {format_coefficient(n)} = {format_coefficient(min_value)}$")
     if b == 0:
-        st.write("- 주기: $\infty$ (b=0일 때 주기가 무한대입니다)")
+        st.write("- 주기: ∞ (b=0일 때 주기가 무한대입니다)")
     else:
-        st.write(f"- 주기: ${period_fraction} \approx {period_decimal}$")
+        st.write(f"- 주기: ${period_fraction}$ ≈ {period_decimal}")
 
     if a < 0:
         st.info("a가 음수이면 그래프가 x축에 대하여 대칭 이동된 형태입니다.")
